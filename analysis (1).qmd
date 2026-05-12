@@ -1,0 +1,90 @@
+---
+title: "Analysis - We R Analyst"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Internal Migration by Reason for Migration
+
+## Analysis Overview
+
+This section presents the analysis of internal migration flows in Turkey based on TÜİK data.  
+The goal is to understand migration patterns, dominant reasons, regional differences, and net migration balances.
+
+---
+
+## 1. Overview of Dataset
+
+The dataset covers total internal migration flows across Turkish provinces. The large variation between provinces indicates strong regional inequality in population movement patterns.
+
+```{r}
+final_data_clean %>%
+  summarise(
+    provinces = n_distinct(il),
+    total_in = sum(gelen_sayi, na.rm = TRUE),
+    total_out = sum(giden_sayi, na.rm = TRUE)
+  )
+
+
+
+```
+
+## Migration Reasons
+
+Housing and job-related migration dominate internal flows.
+
+```{r}
+knitr::kable(reason_summary)
+
+```
+
+## Province Net Migration
+
+Major metropolitan provinces such as Istanbul, Ankara, and Izmir show strong net inflows, confirming their role as primary economic and educational hubs in Turkey.
+
+```{r}
+knitr::kable(province_summary)
+
+```
+
+## Negative Net Migration
+
+Provinces with the largest net migration losses are mostly located in less developed or rural regions. This pattern indicates a continuous movement of population toward urban centers, leading to regional depopulation in eastern and smaller provinces.
+
+```{r}
+knitr::kable(top_negative_net, digits = 0)
+
+```
+
+## Regional Balance
+
+Regional analysis clearly shows that western regions of Turkey experience net migration gain, while eastern regions experience net loss. This reflects the persistent development gap between regions and highlights internal migration as a response to economic inequality.
+
+```{r}
+knitr::kable(bolge_net_goc , digits = 0)
+
+```
+
+## Heatmap
+
+Migration reasons vary significantly across provinces. Metropolitan cities display diverse migration drivers, while smaller provinces are dominated by a limited number of reasons such as family-related or economic migration.
+
+```{r}
+selected_reason_heatmap
+
+```
+This visualization highlights how migration motivations vary significantly across provinces, revealing that metropolitan areas have more diversified drivers while smaller provinces are dominated by fewer migration reasons.
+
+## Final Conclusion
+
+Internal migration in Turkey is strongly driven by economic opportunities, housing conditions, and regional inequalities.
+Large cities continue to attract population, while eastern regions experience consistent out-migration.
+
+
+
+
+
+
